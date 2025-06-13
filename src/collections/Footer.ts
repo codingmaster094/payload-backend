@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload'
-
 export const Footer: CollectionConfig = {
   slug: 'footer',
   labels: {
@@ -11,7 +10,7 @@ export const Footer: CollectionConfig = {
       name: 'logo',
       label: 'Logo',
       type: 'upload',
-      relationTo: 'media', 
+      relationTo: 'media',
       required: true,
     },
     {
