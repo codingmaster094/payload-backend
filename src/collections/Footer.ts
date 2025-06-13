@@ -12,8 +12,7 @@ export const Footer: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
-    },
-    {
+    },{
       name: 'contact',
       label: 'Kontakt',
       type: 'group',
@@ -93,8 +92,7 @@ export const Footer: CollectionConfig = {
           ],
         },
       ],
-    },
-    {
+    },{
       name: 'sprechzeiten',
       label: 'Sprechzeiten',
       type: 'array',
@@ -117,8 +115,7 @@ export const Footer: CollectionConfig = {
         { tag: 'Donnerstag', zeit: '8:00-17:00' },
         { tag: 'Freitag', zeit: '8:00-17:00' },
       ],
-    },
-    {
+    },{
       name: 'navigation',
       label: 'Navigation',
       type: 'array',
@@ -143,8 +140,7 @@ export const Footer: CollectionConfig = {
         { label: 'Kooperationen', link: '/kooperationen' },
         { label: 'Kontakt', link: '/kontakt' },
       ],
-    },
-    {
+    },{
       name: 'rechtliches',
       label: 'Rechtliches',
       type: 'array',
@@ -164,8 +160,7 @@ export const Footer: CollectionConfig = {
         { label: 'Impressum', link: '/impressum' },
         { label: 'Datenschutzerklärung', link: '/datenschutz' },
       ],
-    },
-    {
+    },{
       name: 'company_logos',
       label: 'Unternehmenslogos',
       type: 'array',
