@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-
+// menu items
 export const Menus: CollectionConfig = {
   slug: 'menus',
   admin: {
@@ -25,7 +25,7 @@ export const Menus: CollectionConfig = {
         {
           name: 'label',
           label: 'Item Label',
-          type: 'text'
+          type: 'text',
         },
         {
           name: 'url',
@@ -40,7 +40,7 @@ export const Menus: CollectionConfig = {
             {
               name: 'label',
               label: 'Sub Item Label',
-              type: 'text'
+              type: 'text',
             },
             {
               name: 'url',
