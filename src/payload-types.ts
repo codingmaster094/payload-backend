@@ -6,23 +6,119 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+/**
+ * Supported timezones in IANA format.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supportedTimezones".
+ */
+export type SupportedTimezones =
+  | 'Pacific/Midway'
+  | 'Pacific/Niue'
+  | 'Pacific/Honolulu'
+  | 'Pacific/Rarotonga'
+  | 'America/Anchorage'
+  | 'Pacific/Gambier'
+  | 'America/Los_Angeles'
+  | 'America/Tijuana'
+  | 'America/Denver'
+  | 'America/Phoenix'
+  | 'America/Chicago'
+  | 'America/Guatemala'
+  | 'America/New_York'
+  | 'America/Bogota'
+  | 'America/Caracas'
+  | 'America/Santiago'
+  | 'America/Buenos_Aires'
+  | 'America/Sao_Paulo'
+  | 'Atlantic/South_Georgia'
+  | 'Atlantic/Azores'
+  | 'Atlantic/Cape_Verde'
+  | 'Europe/London'
+  | 'Europe/Berlin'
+  | 'Africa/Lagos'
+  | 'Europe/Athens'
+  | 'Africa/Cairo'
+  | 'Europe/Moscow'
+  | 'Asia/Riyadh'
+  | 'Asia/Dubai'
+  | 'Asia/Baku'
+  | 'Asia/Karachi'
+  | 'Asia/Tashkent'
+  | 'Asia/Calcutta'
+  | 'Asia/Dhaka'
+  | 'Asia/Almaty'
+  | 'Asia/Jakarta'
+  | 'Asia/Bangkok'
+  | 'Asia/Shanghai'
+  | 'Asia/Singapore'
+  | 'Asia/Tokyo'
+  | 'Asia/Seoul'
+  | 'Australia/Brisbane'
+  | 'Australia/Sydney'
+  | 'Pacific/Guam'
+  | 'Pacific/Noumea'
+  | 'Pacific/Auckland'
+  | 'Pacific/Fiji';
+
 export interface Config {
   auth: {
     users: UserAuthOperations;
   };
+  blocks: {};
   collections: {
     users: User;
     media: Media;
+    header: Header;
+    footer: Footer;
+    menus: Menu;
+    review: Review;
+    landing: Landing;
+    'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
+  };
+  collectionsJoins: {};
+  collectionsSelect: {
+    users: UsersSelect<false> | UsersSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    menus: MenusSelect<false> | MenusSelect<true>;
+    review: ReviewSelect<false> | ReviewSelect<true>;
+    landing: LandingSelect<false> | LandingSelect<true>;
+    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
     defaultIDType: string;
   };
-  globals: {};
+  globals: {
+    home: Home;
+    asthetik: Asthetik;
+    naturheilmedizin: Naturheilmedizin;
+    'uber-mich': UberMich;
+    kontakt: Kontakt;
+    impressum: Impressum;
+    datenschutzerklarung: Datenschutzerklarung;
+  };
+  globalsSelect: {
+    home: HomeSelect<false> | HomeSelect<true>;
+    asthetik: AsthetikSelect<false> | AsthetikSelect<true>;
+    naturheilmedizin: NaturheilmedizinSelect<false> | NaturheilmedizinSelect<true>;
+    'uber-mich': UberMichSelect<false> | UberMichSelect<true>;
+    kontakt: KontaktSelect<false> | KontaktSelect<true>;
+    impressum: ImpressumSelect<false> | ImpressumSelect<true>;
+    datenschutzerklarung: DatenschutzerklarungSelect<false> | DatenschutzerklarungSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
+  };
+  jobs: {
+    tasks: unknown;
+    workflows: unknown;
   };
 }
 export interface UserAuthOperations {
@@ -81,6 +177,361 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: string;
+  logo?: (string | null) | Media;
+  navigationLinks?:
+    | {
+        label?: string | null;
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  contactInfo?: {
+    phone?: string | null;
+    email?: string | null;
+  };
+  socialMedia?:
+    | {
+        platform?: string | null;
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: string;
+  logo: string | Media;
+  contact?: {
+    address?: {
+      text?: string | null;
+      url?: string | null;
+    };
+    phone?: {
+      text?: string | null;
+      url?: string | null;
+    };
+    whatsaap?: {
+      text?: string | null;
+      url?: string | null;
+    };
+    email?: {
+      text?: string | null;
+      url?: string | null;
+    };
+    social?:
+      | {
+          platform?: (string | null) | Media;
+          url?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  sprechzeiten?:
+    | {
+        tag?: string | null;
+        zeit?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  navigation?:
+    | {
+        label?: string | null;
+        link?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  rechtliches?:
+    | {
+        label?: string | null;
+        link?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  company_logos?:
+    | {
+        logo?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menus".
+ */
+export interface Menu {
+  id: string;
+  title: string;
+  items?:
+    | {
+        label?: string | null;
+        url?: string | null;
+        children?:
+          | {
+              label?: string | null;
+              url?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "review".
+ */
+export interface Review {
+  id: string;
+  title?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  Logos_items?:
+    | {
+        image: string | Media;
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  Review_items?:
+    | {
+        title?: string | null;
+        date?: string | null;
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        button?: {
+          text?: string | null;
+          url?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing".
+ */
+export interface Landing {
+  id: string;
+  title?: string | null;
+  slug?: string | null;
+  hero?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    image?: (string | null) | Media;
+    button?: {
+      text?: string | null;
+      url?: string | null;
+    };
+  };
+  pageSections?:
+    | (
+        | {
+            show_section?: boolean | null;
+            sectionID?: string | null;
+            title?: string | null;
+            description?: string | null;
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (string | null) | Media;
+            Reverse_image?: boolean | null;
+            Small_image?: boolean | null;
+            items?:
+              | {
+                  title?: string | null;
+                  description?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: string;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
+                  button?: {
+                    text?: string | null;
+                    url?: string | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'multiple-section';
+          }
+        | {
+            show_section?: boolean | null;
+            title?: string | null;
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (string | null) | Media;
+            button?: {
+              text?: string | null;
+              url?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta-section';
+          }
+      )[]
+    | null;
+  Review_section?: {
+    show_section?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-locked-documents".
+ */
+export interface PayloadLockedDocument {
+  id: string;
+  document?:
+    | ({
+        relationTo: 'users';
+        value: string | User;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'header';
+        value: string | Header;
+      } | null)
+    | ({
+        relationTo: 'footer';
+        value: string | Footer;
+      } | null)
+    | ({
+        relationTo: 'menus';
+        value: string | Menu;
+      } | null)
+    | ({
+        relationTo: 'review';
+        value: string | Review;
+      } | null)
+    | ({
+        relationTo: 'landing';
+        value: string | Landing;
+      } | null);
+  globalSlug?: string | null;
+  user: {
+    relationTo: 'users';
+    value: string | User;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
@@ -112,6 +563,1830 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
+  navigationLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  contactInfo?:
+    | T
+    | {
+        phone?: T;
+        email?: T;
+      };
+  socialMedia?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  logo?: T;
+  contact?:
+    | T
+    | {
+        address?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+        phone?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+        whatsaap?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+        email?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+        social?:
+          | T
+          | {
+              platform?: T;
+              url?: T;
+              id?: T;
+            };
+      };
+  sprechzeiten?:
+    | T
+    | {
+        tag?: T;
+        zeit?: T;
+        id?: T;
+      };
+  navigation?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+        id?: T;
+      };
+  rechtliches?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+        id?: T;
+      };
+  company_logos?:
+    | T
+    | {
+        logo?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menus_select".
+ */
+export interface MenusSelect<T extends boolean = true> {
+  title?: T;
+  items?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        children?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "review_select".
+ */
+export interface ReviewSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  Logos_items?:
+    | T
+    | {
+        image?: T;
+        url?: T;
+        id?: T;
+      };
+  Review_items?:
+    | T
+    | {
+        title?: T;
+        date?: T;
+        content?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing_select".
+ */
+export interface LandingSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  hero?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        image?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+      };
+  pageSections?:
+    | T
+    | {
+        'multiple-section'?:
+          | T
+          | {
+              show_section?: T;
+              sectionID?: T;
+              title?: T;
+              description?: T;
+              content?: T;
+              image?: T;
+              Reverse_image?: T;
+              Small_image?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    content?: T;
+                    button?:
+                      | T
+                      | {
+                          text?: T;
+                          url?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'cta-section'?:
+          | T
+          | {
+              show_section?: T;
+              title?: T;
+              content?: T;
+              image?: T;
+              button?:
+                | T
+                | {
+                    text?: T;
+                    url?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  Review_section?:
+    | T
+    | {
+        show_section?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-locked-documents_select".
+ */
+export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
+  document?: T;
+  globalSlug?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-preferences_select".
+ */
+export interface PayloadPreferencesSelect<T extends boolean = true> {
+  user?: T;
+  key?: T;
+  value?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-migrations_select".
+ */
+export interface PayloadMigrationsSelect<T extends boolean = true> {
+  name?: T;
+  batch?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: string;
+  title?: string | null;
+  slug?: string | null;
+  hero?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    image?: (string | null) | Media;
+    button?: {
+      text?: string | null;
+      url?: string | null;
+    };
+  };
+  companyLogo?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    items?:
+      | {
+          image: string | Media;
+          link?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  GesundheitSection: {
+    show_section?: boolean | null;
+    title?: string | null;
+    description?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    image: string | Media;
+    items?:
+      | {
+          title?: string | null;
+          decription?: string | null;
+          content?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          button?: {
+            text?: string | null;
+            url?: string | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  CTASection?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    image?: (string | null) | Media;
+    button?: {
+      text?: string | null;
+      url?: string | null;
+    };
+  };
+  MeinePraxis: {
+    show_section?: boolean | null;
+    title?: string | null;
+    description?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    image: string | Media;
+    button?: {
+      text?: string | null;
+      url?: string | null;
+    };
+  };
+  Vorteilen_profitieren?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    items?:
+      | {
+          title?: string | null;
+          image: string | Media;
+          content?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  CTASection2?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    image?: (string | null) | Media;
+    button?: {
+      text?: string | null;
+      url?: string | null;
+    };
+  };
+  Gesundheit_und_Schönheit?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    items?:
+      | {
+          title?: string | null;
+          image: string | Media;
+          content?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  Review_section?: {
+    show_section?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "asthetik".
+ */
+export interface Asthetik {
+  id: string;
+  title?: string | null;
+  slug?: string | null;
+  hero?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    image?: (string | null) | Media;
+    button?: {
+      text?: string | null;
+      url?: string | null;
+    };
+  };
+  companyLogo?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    items?:
+      | {
+          image: string | Media;
+          link?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  Behandlungen?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    button?: {
+      text?: string | null;
+      url?: string | null;
+    };
+  };
+  pageSections?:
+    | (
+        | {
+            show_section?: boolean | null;
+            sectionID?: string | null;
+            title?: string | null;
+            description?: string | null;
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (string | null) | Media;
+            Reverse_image?: boolean | null;
+            Small_image?: boolean | null;
+            items?:
+              | {
+                  title?: string | null;
+                  description?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: string;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
+                  button?: {
+                    text?: string | null;
+                    url?: string | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'multiple-section';
+          }
+        | {
+            show_section?: boolean | null;
+            title?: string | null;
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (string | null) | Media;
+            button?: {
+              text?: string | null;
+              url?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta-section';
+          }
+      )[]
+    | null;
+  FAQ?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    items?:
+      | {
+          title?: string | null;
+          content?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  Review_section?: {
+    show_section?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "naturheilmedizin".
+ */
+export interface Naturheilmedizin {
+  id: string;
+  title?: string | null;
+  slug?: string | null;
+  hero?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    image?: (string | null) | Media;
+    button?: {
+      text?: string | null;
+      url?: string | null;
+    };
+  };
+  companyLogo?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    items?:
+      | {
+          image: string | Media;
+          link?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  Behandlungen?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    button?: {
+      text?: string | null;
+      url?: string | null;
+    };
+  };
+  pageSections?:
+    | (
+        | {
+            show_section?: boolean | null;
+            sectionID?: string | null;
+            title?: string | null;
+            description?: string | null;
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (string | null) | Media;
+            Reverse_image?: boolean | null;
+            Small_image?: boolean | null;
+            items?:
+              | {
+                  title?: string | null;
+                  description?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: string;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
+                  button?: {
+                    text?: string | null;
+                    url?: string | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'multiple-section';
+          }
+        | {
+            show_section?: boolean | null;
+            title?: string | null;
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (string | null) | Media;
+            button?: {
+              text?: string | null;
+              url?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta-section';
+          }
+      )[]
+    | null;
+  FAQ?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    items?:
+      | {
+          title?: string | null;
+          content?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  Review_section?: {
+    show_section?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "uber-mich".
+ */
+export interface UberMich {
+  id: string;
+  title?: string | null;
+  slug?: string | null;
+  hero?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    image?: (string | null) | Media;
+    button?: {
+      text?: string | null;
+      url?: string | null;
+    };
+  };
+  companyLogo?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    items?:
+      | {
+          image: string | Media;
+          link?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  Erfahrung_und_Kompetenz?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    Small_image?: boolean | null;
+    image?: (string | null) | Media;
+  };
+  Counter?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    items?:
+      | {
+          count?: string | null;
+          count_description?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  Fort_und_Weiterbildungen: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    Small_image?: boolean | null;
+    image: string | Media;
+  };
+  CTASection?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    image?: (string | null) | Media;
+    button?: {
+      text?: string | null;
+      url?: string | null;
+    };
+  };
+  Review_section?: {
+    show_section?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "kontakt".
+ */
+export interface Kontakt {
+  id: string;
+  title?: string | null;
+  slug?: string | null;
+  hero?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    image?: (string | null) | Media;
+    button?: {
+      text?: string | null;
+      url?: string | null;
+    };
+  };
+  Contact_about?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    items?:
+      | {
+          title?: string | null;
+          content?: {
+            root: {
+              type: string;
+              children: {
+                type: string;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          button?: {
+            text?: string | null;
+            url?: string | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  Map?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    image?: (string | null) | Media;
+    url?: string | null;
+  };
+  Contact_form?: {
+    show_section?: boolean | null;
+    title?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    live_chat?: {
+      text?: string | null;
+      url?: string | null;
+    };
+    address?: {
+      text?: string | null;
+      url?: string | null;
+    };
+    social?:
+      | {
+          platform?: (string | null) | Media;
+          url?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  Review_section?: {
+    show_section?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "impressum".
+ */
+export interface Impressum {
+  id: string;
+  title: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "datenschutzerklarung".
+ */
+export interface Datenschutzerklarung {
+  id: string;
+  title: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  hero?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        image?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+      };
+  companyLogo?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        items?:
+          | T
+          | {
+              image?: T;
+              link?: T;
+              id?: T;
+            };
+      };
+  GesundheitSection?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        description?: T;
+        content?: T;
+        image?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              decription?: T;
+              content?: T;
+              button?:
+                | T
+                | {
+                    text?: T;
+                    url?: T;
+                  };
+              id?: T;
+            };
+      };
+  CTASection?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        image?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+      };
+  MeinePraxis?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        description?: T;
+        content?: T;
+        image?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+      };
+  Vorteilen_profitieren?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              image?: T;
+              content?: T;
+              id?: T;
+            };
+      };
+  CTASection2?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        image?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+      };
+  Gesundheit_und_Schönheit?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              image?: T;
+              content?: T;
+              id?: T;
+            };
+      };
+  Review_section?:
+    | T
+    | {
+        show_section?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "asthetik_select".
+ */
+export interface AsthetikSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  hero?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        image?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+      };
+  companyLogo?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        items?:
+          | T
+          | {
+              image?: T;
+              link?: T;
+              id?: T;
+            };
+      };
+  Behandlungen?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+      };
+  pageSections?:
+    | T
+    | {
+        'multiple-section'?:
+          | T
+          | {
+              show_section?: T;
+              sectionID?: T;
+              title?: T;
+              description?: T;
+              content?: T;
+              image?: T;
+              Reverse_image?: T;
+              Small_image?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    content?: T;
+                    button?:
+                      | T
+                      | {
+                          text?: T;
+                          url?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'cta-section'?:
+          | T
+          | {
+              show_section?: T;
+              title?: T;
+              content?: T;
+              image?: T;
+              button?:
+                | T
+                | {
+                    text?: T;
+                    url?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  FAQ?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              content?: T;
+              id?: T;
+            };
+      };
+  Review_section?:
+    | T
+    | {
+        show_section?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "naturheilmedizin_select".
+ */
+export interface NaturheilmedizinSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  hero?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        image?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+      };
+  companyLogo?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        items?:
+          | T
+          | {
+              image?: T;
+              link?: T;
+              id?: T;
+            };
+      };
+  Behandlungen?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+      };
+  pageSections?:
+    | T
+    | {
+        'multiple-section'?:
+          | T
+          | {
+              show_section?: T;
+              sectionID?: T;
+              title?: T;
+              description?: T;
+              content?: T;
+              image?: T;
+              Reverse_image?: T;
+              Small_image?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    content?: T;
+                    button?:
+                      | T
+                      | {
+                          text?: T;
+                          url?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'cta-section'?:
+          | T
+          | {
+              show_section?: T;
+              title?: T;
+              content?: T;
+              image?: T;
+              button?:
+                | T
+                | {
+                    text?: T;
+                    url?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  FAQ?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              content?: T;
+              id?: T;
+            };
+      };
+  Review_section?:
+    | T
+    | {
+        show_section?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "uber-mich_select".
+ */
+export interface UberMichSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  hero?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        image?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+      };
+  companyLogo?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        items?:
+          | T
+          | {
+              image?: T;
+              link?: T;
+              id?: T;
+            };
+      };
+  Erfahrung_und_Kompetenz?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        Small_image?: T;
+        image?: T;
+      };
+  Counter?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        items?:
+          | T
+          | {
+              count?: T;
+              count_description?: T;
+              id?: T;
+            };
+      };
+  Fort_und_Weiterbildungen?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        Small_image?: T;
+        image?: T;
+      };
+  CTASection?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        image?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+      };
+  Review_section?:
+    | T
+    | {
+        show_section?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "kontakt_select".
+ */
+export interface KontaktSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  hero?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        image?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+      };
+  Contact_about?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              content?: T;
+              button?:
+                | T
+                | {
+                    text?: T;
+                    url?: T;
+                  };
+              id?: T;
+            };
+      };
+  Map?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        image?: T;
+        url?: T;
+      };
+  Contact_form?:
+    | T
+    | {
+        show_section?: T;
+        title?: T;
+        content?: T;
+        live_chat?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+        address?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+        social?:
+          | T
+          | {
+              platform?: T;
+              url?: T;
+              id?: T;
+            };
+      };
+  Review_section?:
+    | T
+    | {
+        show_section?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "impressum_select".
+ */
+export interface ImpressumSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "datenschutzerklarung_select".
+ */
+export interface DatenschutzerklarungSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

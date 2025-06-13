@@ -9,7 +9,18 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
-
+import { Header } from './collections/Header'
+import { Footer } from './collections/Footer'
+import { Menus } from './collections/Menus'
+import { Review } from './collections/Review'
+import { LandingPages } from './collections/LandingPages'
+import { Home } from './globals/Home'
+import { Asthetik } from './globals/Asthetik'
+import { Naturheilmedizin } from './globals/Naturheilmedizin'
+import { Ubermich } from './globals/Ubermich'
+import { Kontakt } from './globals/Kontakt'
+import { Impressum } from './globals/Impressum'
+import { Datenschutzerklarung } from './globals/Datenschutzerklarung'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -20,7 +31,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  globals: [Home, Asthetik, Naturheilmedizin, Ubermich, Kontakt, Impressum, Datenschutzerklarung],
+  collections: [Users, Media, Header, Footer, Menus, Review, LandingPages],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
