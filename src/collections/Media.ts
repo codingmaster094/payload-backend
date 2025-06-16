@@ -3,7 +3,7 @@ import type { CollectionConfig } from 'payload'
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
-    read: () => true, // ✅ Allow public read access to media files
+    read: () => true,
   },
   upload: {
     staticDir: 'media',
