@@ -2,7 +2,10 @@ import { withPayload } from '@payloadcms/next/withPayload'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Your Next.js config here
+  // You can keep other valid config options here
+  experimental: {
+    // Only include valid experimental flags recognized by Next.js
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

@@ -9,8 +9,8 @@ const allowedGlobals: GlobalSlug[] = [
   'uber-mich',
   'kontakt',
   'impressum',
-  'datenschutzerklarung'
-] 
+  'datenschutzerklarung',
+]
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -79,7 +79,7 @@ export const GET = async (req: NextRequest) => {
             headers: { 'Content-Type': 'application/json' },
           })
         }
-      
+
         const page = await payload.find({
           collection: 'landing',
           where: {
@@ -89,19 +89,18 @@ export const GET = async (req: NextRequest) => {
           },
           depth: 3,
         })
-      
+
         if (!page.docs || page.docs.length === 0) {
           return new Response(JSON.stringify({ error: 'Landing page not found' }), {
             status: 404,
             headers: { 'Content-Type': 'application/json' },
           })
         }
-      
+
         return new Response(JSON.stringify(page.docs[0]), {
           headers: { 'Content-Type': 'application/json' },
         })
       }
-      
 
       case 'global': {
         if (!slug || !allowedGlobals.includes(slug as GlobalSlug)) {
