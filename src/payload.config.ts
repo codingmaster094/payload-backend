@@ -23,7 +23,6 @@ import { Impressum } from './globals/Impressum'
 import { Datenschutzerklarung } from './globals/Datenschutzerklarung'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-
 export default buildConfig({
   serverURL: 'https://payload-backend-nu.vercel.app',
   admin: {
