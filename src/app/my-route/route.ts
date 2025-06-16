@@ -109,14 +109,12 @@ export const GET = async (req: NextRequest) => {
             headers: { 'Content-Type': 'application/json' },
           })
         }
-
         try {
           const global = await payload.findGlobal({ slug: slug as GlobalSlug, depth: 1 })
           const safeGlobal = JSON.parse(JSON.stringify(global)) // ✅ This avoids XrayWrapper error
           return new Response(JSON.stringify(safeGlobal), {
             headers: { 'Content-Type': 'application/json' },
           })
-
         } catch (err) {
           console.error('Error fetching global:', err)
           return new Response(JSON.stringify({ error: `Global "${slug}" not found` }), {
