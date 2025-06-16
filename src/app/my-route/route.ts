@@ -111,7 +111,11 @@ export const GET = async (req: NextRequest) => {
         }
 
         try {
-          const global = await payload.findGlobal({ slug: slug as GlobalSlug })
+          const global = await payload.findGlobal({
+            slug: slug as GlobalSlug,
+            depth: 1, // ✅ Add this line to populate related media data
+          })
+          
           return new Response(JSON.stringify(global), {
             headers: { 'Content-Type': 'application/json' },
           })
