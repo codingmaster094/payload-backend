@@ -6,7 +6,7 @@ export const Media: CollectionConfig = {
     read: () => true,
   },
   upload: {
-    staticDir: 'media',
+    staticDir: 'media', // ✅ This works on Render
     imageSizes: [
       {
         name: 'thumbnail',
@@ -27,6 +27,7 @@ export const Media: CollectionConfig = {
         position: 'centre',
       },
     ],
+    ,  // ✅ Optional thumbnails
     adminThumbnail: 'thumbnail',
     mimeTypes: ['image/*'],
   },

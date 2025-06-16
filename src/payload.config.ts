@@ -24,7 +24,7 @@ import { Datenschutzerklarung } from './globals/Datenschutzerklarung'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 export default buildConfig({
-  serverURL: 'https://payload-backend-nu.vercel.app',
+  serverURL: 'https://payload-backend-20uj.onrender.com',
   admin: {
     user: Users.slug,
     importMap: {

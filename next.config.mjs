@@ -2,9 +2,11 @@ import { withPayload } from '@payloadcms/next/withPayload'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // You can keep other valid config options here
-  experimental: {
-    // Only include valid experimental flags recognized by Next.js
+  images: {
+    domains: ['payload-backend-20uj.onrender.com'], // ✅ only hostname
+  },
+  env: {
+    NEXT_BASE_URL: 'https://payload-backend-20uj.onrender.com',
   },
 }
 
