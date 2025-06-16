@@ -27,7 +27,6 @@ export const Media: CollectionConfig = {
         position: 'centre',
       },
     ],
-    ,  // ✅ Optional thumbnails
     adminThumbnail: 'thumbnail',
     mimeTypes: ['image/*'],
   },
